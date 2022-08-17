@@ -32,22 +32,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   countButtonMethod(WirdProvider wirdData) {
     if (endMessage) {
+      print('end message');
       return null;
     } else {
       if (count < wirdData.getWirdList[nextIndex].count - 1) {
+        print('end message 1111');
+
         setState(() {
           count++;
         });
-      } else if (nextIndex >= wirdData.getWirdList.length) {
-        setState(() {
-          endMessage = true;
-        });
       } else {
-        setState(() {
-          nextIndex++;
+        if (nextIndex == wirdData.getWirdList.length - 1) {
+          setState(() {
+            endMessage = true;
+          });
+        } else {
+          setState(() {
+            print('end message 333');
 
-          count = 0;
-        });
+            nextIndex++;
+
+            count = 0;
+          });
+        }
       }
     }
   }
@@ -144,28 +151,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Center arabicTextWidget(BuildContext context, WirdProvider wirdData) {
     return Center(
         child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Card(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: endMessage
-                        ? Text('over',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 35,
-                            ))
-                        : Text(
-                            wirdData.getWirdList[nextIndex].arabic,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
-                            ),
-                          ),
-                  ),),
-            ),));
+      textDirection: TextDirection.rtl,
+      child: Card(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: endMessage
+                ? Text('over',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35,
+                    ))
+                : Text(
+                    wirdData.getWirdList[nextIndex].arabic,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    ));
   }
 }
