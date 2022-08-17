@@ -35,7 +35,7 @@ class WirdProvider extends ChangeNotifier {
         returnList.add(WirdData(arabicList[i], 1));
       }
     }
-    print(returnList);
+    // print(returnList);
     return returnList;
   }
 
