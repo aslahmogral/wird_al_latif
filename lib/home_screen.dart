@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wird_al_latif/provider/wird_provider.dart';
+import 'package:wird_al_latif/utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   var count = 0;
 
   prevButtonMethod(WirdProvider wirdData) {
+    count = 0;
+
     if (nextIndex > 0 && nextIndex < wirdData.getWirdList.length) {
       setState(() {
         nextIndex--;
@@ -60,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   nextButtonMethod(WirdProvider wirdData) {
+    count = 0;
+
     nextIndex++;
 
     if (nextIndex < wirdData.getWirdList.length - 1) {
@@ -79,80 +84,136 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
-      var percentage = nextIndex / wirdData.getWirdList.length * 100;
+      // var percentage = nextIndex / wirdData.getWirdList.length * 100;
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Wirdul-Latif '),
-          actions: [
-            InkWell(
-              onDoubleTap: (() {
-                setState(() {
-                  nextIndex = 0;
-                });
-              }),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Text(percentage > 100
-                        ? '100.0%'
-                        : '${percentage.roundToDouble().toString()}%'),
-                    Text('Reset')
-                  ],
-                ),
+          // appBar: AppBar(
+          //   title: const Text('Wirdul-Latif '),
+          //   actions: [
+          //     InkWell(
+          //       onDoubleTap: (() {
+          //         setState(() {
+          //           nextIndex = 0;
+          //         });
+          //       }),
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: Column(
+          //           children: [
+          //             Text(percentage > 100
+          //                 ? '100.0%'
+          //                 : '${percentage.roundToDouble().toString()}%'),
+          //             Text('Reset')
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          //   centerTitle: true,
+          // ),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: SizedBox(
+              height: 120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FloatingActionButton.extended(
+                      backgroundColor: WirdColors.primaryColor,
+                      onPressed: () {
+                        prevButtonMethod(wirdData);
+                      },
+                      label: const Text(
+                        '  Prev  ',
+                        style: TextStyle(color: WirdColors.seconderyColor),
+                      )),
+                  FloatingActionButton.large(
+                      backgroundColor: WirdColors.primaryColor,
+                      onPressed: () {
+                        countButtonMethod(wirdData);
+                      },
+                      child: Text(
+                          endMessage
+                              ? 'finished'
+                              : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
+                          style: TextStyle(color: WirdColors.seconderyColor))),
+                  FloatingActionButton.extended(
+                      backgroundColor: WirdColors.primaryColor,
+                      onPressed: () {
+                        nextButtonMethod(wirdData);
+                      },
+                      label: const Text('  Next  ',
+                          style: TextStyle(color: WirdColors.seconderyColor))),
+                ],
               ),
-            )
-          ],
-          centerTitle: true,
-        ),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: SizedBox(
-            height: 120,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                FloatingActionButton.extended(
-                    onPressed: () {
-                      prevButtonMethod(wirdData);
-                    },
-                    label: const Text('  Prev  ')),
-                FloatingActionButton.large(
-                    onPressed: () {
-                      countButtonMethod(wirdData);
-                    },
-                    child: Text(endMessage
-                        ? 'finished'
-                        : '$count /${wirdData.getWirdList[nextIndex].count.toString()}')),
-                FloatingActionButton.extended(
-                    onPressed: () {
-                      nextButtonMethod(wirdData);
-                    },
-                    label: const Text('  Next  ')),
-              ],
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              arabicTextWidget(context, wirdData),
-              SizedBox(
-                height: 150,
-              )
-            ],
-          ),
-        ),
-      );
+          body: GestureDetector(
+            onHorizontalDragEnd: (DragEndDetails details) {
+              if (details.primaryVelocity! > 0) {
+                // User swiped Left
+                prevButtonMethod(wirdData);
+              } else if (details.primaryVelocity! < 0) {
+                // User swiped Right
+                nextButtonMethod(wirdData);
+              }
+            },
+            onTap: () {
+              countButtonMethod(wirdData);
+            },
+            child: Column(
+              children: [
+                Container(
+                  // color: Colors.blue,
+                  child: Image.asset(
+                    'asset/masjid_arc.png',
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Expanded(
+                  flex: 3,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        arabicTextWidget(context, wirdData),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                        // color: Colors.orange,
+                        ))
+                // Expanded(child: SizedBox())
+              ],
+            ),
+          )
+
+          //  SingleChildScrollView(
+          //   child: Column(
+          //     children: [
+          //       SizedBox(height: 20),
+          //       arabicTextWidget(context, wirdData),
+          //       SizedBox(
+          //         height: 150,
+          //       )
+          //     ],
+          //   ),
+          // ),
+          );
     });
   }
 
-  Center arabicTextWidget(BuildContext context, WirdProvider wirdData) {
-    return Center(
-        child: Directionality(
+  Directionality arabicTextWidget(BuildContext context, WirdProvider wirdData) {
+    return Directionality(
       textDirection: TextDirection.rtl,
-      child: Card(
+      child: Container(
+        color: Colors.transparent,
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
           child: Padding(
@@ -175,6 +236,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    ));
+    );
   }
 }
