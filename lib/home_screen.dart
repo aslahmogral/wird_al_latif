@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wird_al_latif/provider/wird_provider.dart';
 import 'package:wird_al_latif/utils/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int nextIndex = 0;
   bool endMessage = false;
   var count = 0;
+  double percentage = 0;
 
   prevButtonMethod(WirdProvider wirdData) {
     count = 0;
@@ -84,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
-      // var percentage = nextIndex / wirdData.getWirdList.length * 100;
+     percentage = nextIndex / wirdData.getWirdList.length * 1;
       return Scaffold(
           // appBar: AppBar(
           //   title: const Text('Wirdul-Latif '),
@@ -120,11 +122,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   FloatingActionButton.extended(
                       backgroundColor: WirdColors.primaryColor,
                       onPressed: () {
+                        print(percentage);
+
                         prevButtonMethod(wirdData);
                       },
                       label: const Text(
                         '  Prev  ',
-                        style: TextStyle(color: WirdColors.seconderyColor),
+                        style: TextStyle(color: Color.fromARGB(255, 254, 213, 100),fontWeight: FontWeight.bold,),
                       )),
                   FloatingActionButton.large(
                       backgroundColor: WirdColors.primaryColor,
@@ -139,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   FloatingActionButton.extended(
                       backgroundColor: WirdColors.primaryColor,
                       onPressed: () {
+                        print(percentage);
                         nextButtonMethod(wirdData);
                       },
                       label: const Text('  Next  ',
@@ -187,25 +192,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 1,
                     child: Container(
-                        // color: Colors.orange,
-                        ))
+                      width: MediaQuery.of(context).size.width,
+                      // color: Colors.orange,
+                      child: Column(
+                        children: [
+                          Expanded(child: SizedBox()),
+                          SizedBox(
+                            height: 10,
+                            child: LinearProgressIndicator(
+                              value: percentage,
+                              backgroundColor: WirdColors.seconderyColor.withOpacity(0.5),
+                              valueColor: AlwaysStoppedAnimation(
+                                  WirdColors.primaryColor),
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
                 // Expanded(child: SizedBox())
               ],
             ),
-          )
-
-          //  SingleChildScrollView(
-          //   child: Column(
-          //     children: [
-          //       SizedBox(height: 20),
-          //       arabicTextWidget(context, wirdData),
-          //       SizedBox(
-          //         height: 150,
-          //       )
-          //     ],
-          //   ),
-          // ),
-          );
+          ));
     });
   }
 
@@ -228,10 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 : Text(
                     wirdData.getWirdList[nextIndex].arabic,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.amiri(fontWeight: FontWeight.bold,
                       fontSize: 28,
-                    ),
+                      )
+                    
                   ),
           ),
         ),
