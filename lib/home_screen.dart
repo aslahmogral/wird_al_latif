@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           endMessage
                               ? 'finished'
                               : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
-                          style: TextStyle(color: WirdColors.seconderyColor))),
+                          style: TextStyle(color: WirdColors.seconderyColor,fontWeight: FontWeight.bold))),
                   FloatingActionButton.extended(
                       backgroundColor: WirdColors.primaryColor,
                       onPressed: () {
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         nextButtonMethod(wirdData);
                       },
                       label: const Text('  Next  ',
-                          style: TextStyle(color: WirdColors.seconderyColor))),
+                          style: TextStyle(color: WirdColors.seconderyColor,fontWeight: FontWeight.bold))),
                 ],
               ),
             ),
