@@ -81,37 +81,42 @@ class _HomeScreenState extends State<HomeScreen> {
       percentage = index / wirdData.getWirdList.length * 1;
       var CounterPercentage = count / wirdData.getWirdList[index].count * 1;
       var individualWirdCounter = Positioned(
-          bottom: 30,
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                  child: SizedBox(
-                width: 50,
-                height: 50,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CircularProgressIndicator(
-                      value: CounterPercentage,
-                      valueColor:
-                          AlwaysStoppedAnimation(WirdColors.primaryColor),
-                      backgroundColor: WirdColors.seconderyColor,
+          bottom: 0,
+          child: Column(
+            children: [
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CircularProgressIndicator(
+                          value: CounterPercentage,
+                          valueColor:
+                              AlwaysStoppedAnimation(WirdColors.primaryColor),
+                          backgroundColor: WirdColors.seconderyColor,
+                        ),
+                        Container(
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Center(
+                                child: checkWirdCounterIsOne(wirdData)
+                                    ? Text(
+                                        '${wirdData.getWirdList[index].count.toString()}')
+                                    : Text('')))
+                      ],
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                            // color: Colors.blue,
-
-                            shape: BoxShape.circle),
-                        // color: Colors.blue,
-
-                        child: Center(
-                            child: checkWirdCounterIsOne(wirdData)
-                                ? Text(
-                                    '${wirdData.getWirdList[index].count.toString()}')
-                                : Text('')))
-                  ],
-                ),
-              ))));
+                  ))),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.3,
+                  child: Image.asset('asset/bismillah.png'))
+            ],
+          ));
       return SafeArea(
         child: Scaffold(
             body: GestureDetector(
@@ -129,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 children: [
                   Stack(
+                    clipBehavior: Clip.none,
                     children: [
                       Container(
                         // color: Colors.blue,
@@ -137,6 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       individualWirdCounter,
+                      // Positioned(
+                      //     bottom: 0,
+                      //     child: SizedBox(
+                      //       height: 100,
+                      //         child: Image.asset('asset/bismillah.png')))
                     ],
                   ),
                   SizedBox(
@@ -176,7 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           fit: StackFit.expand,
                           children: [
                             Container(
-                              // color: Colors.green,
                               decoration: BoxDecoration(
                                   color: WirdColors.seconderyColorDark,
                                   border: Border.all(
@@ -185,7 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       topLeft: Radius.circular(100),
                                       topRight: Radius.circular(100))),
                               width: MediaQuery.of(context).size.width,
-                              // color: Colors.orange,
                               child: Column(
                                 children: [
                                   Expanded(child: SizedBox()),
@@ -205,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Container(
                               height: 20,
                               child: Padding(
-                                padding: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.only(bottom:20.0,top: 5),
                                 child: Image.asset('asset/finger_print.png'),
                               ),
                             )
@@ -276,18 +285,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(quote,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poorStory(
-                              fontSize: 14, color: WirdColors.primaryColor)),
+                              fontSize: 20, color: WirdColors.primaryColor)),
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'Shaykh Hamza Yusuf',
-                        style: 
-                        GoogleFonts.teko(
-                          fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: WirdColors.seconderyColorDark))
-                      
+                      Text('Shaykh Hamza Yusuf',
+                          style: GoogleFonts.teko(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: WirdColors.seconderyColorDark))
                     ],
                   )
                 : Text(wirdData.getWirdList[index].arabic,
