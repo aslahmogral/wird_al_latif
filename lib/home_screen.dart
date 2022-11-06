@@ -275,12 +275,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(quote,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: WirdColors.primaryColor
-                          )),
-                          SizedBox(height: 10,),
-                          Text('<----- Shaykh Hamza Yusuf ---->',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: WirdColors.seconderyColorDark),)
+                          style: GoogleFonts.poorStory(
+                              fontSize: 14, color: WirdColors.primaryColor)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Shaykh Hamza Yusuf',
+                        style: 
+                        GoogleFonts.teko(
+                          fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: WirdColors.seconderyColorDark))
+                      
                     ],
                   )
                 : Text(wirdData.getWirdList[index].arabic,
