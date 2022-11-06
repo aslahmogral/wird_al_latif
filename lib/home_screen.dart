@@ -12,25 +12,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int nextIndex = 0;
+  int index = 0;
   bool endMessage = false;
   var count = 0;
   double percentage = 0;
+  late bool checkIfWirdCounterIsOne;
+
+  String quote =
+      'People are in need of the Prophetic du’ā’s now, more than ever, because there are shayateen everywhere. If we could see the unseen world, I’m telling you, we would all pass out. Because there are demons all over the place. What you’re doing whilst reciting invocations and litanies is creating a space around you, that if the Jinn and shaytaan see it, they have to back away. If you are consistent with this (Wird al Latif), I guarantee you will see a difference in your life. And if you miss it out you’ll feel horrible during the day – it’ll feel like going outside without brushing your teeth. Put yourself in the protection of Allāh through daily du’ā"';
 
   prevButtonMethod(WirdProvider wirdData) {
+    endMessage = false;
     count = 0;
-
-    if (nextIndex > 0 && nextIndex < wirdData.getWirdList.length) {
+    print(index);
+    if (index != 0) {
       setState(() {
-        nextIndex--;
-        print(nextIndex);
-      });
-    } else if (nextIndex > wirdData.getWirdList.length - 1) {
-      setState(() {
-        nextIndex = wirdData.getWirdList.length;
-        nextIndex--;
-        print(nextIndex);
-        endMessage = false;
+        index--;
       });
     }
   }
@@ -40,14 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
       print('end message');
       return null;
     } else {
-      if (count < wirdData.getWirdList[nextIndex].count - 1) {
+      if (count < wirdData.getWirdList[index].count - 1) {
         print('end message 1111');
 
         setState(() {
           count++;
         });
       } else {
-        if (nextIndex == wirdData.getWirdList.length - 1) {
+        if (index == wirdData.getWirdList.length - 1) {
           setState(() {
             endMessage = true;
           });
@@ -55,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             print('end message 333');
 
-            nextIndex++;
+            index++;
 
             count = 0;
           });
@@ -66,19 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   nextButtonMethod(WirdProvider wirdData) {
     count = 0;
-
-    nextIndex++;
-
-    if (nextIndex < wirdData.getWirdList.length - 1) {
+    if (index <= wirdData.getWirdList.length - 2) {
+      index++;
       setState(() {
-        print('1: $nextIndex');
+        print('nextbutton : $index');
       });
-    } else if (nextIndex >= wirdData.getWirdList.length) {
-      setState(() {
-        endMessage = true;
-        nextIndex == wirdData.getWirdList.length + 2;
-        print('2: $nextIndex');
-      });
+    } else {
+      setState(() {});
+      endMessage = true;
     }
   }
 
@@ -86,199 +78,187 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
-      percentage = nextIndex / wirdData.getWirdList.length * 1;
-      var CounterPercentage = count / wirdData.getWirdList[nextIndex].count * 1;
-      // var percentageBy100 = nextIndex / wirdData.getWirdList.length * 100;
-      return Scaffold(
-          // floatingActionButton: Padding(
-          //   padding: const EdgeInsets.only(left: 20),
-          //   child: SizedBox(
-          //     height: 120,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //       children: [
-          //         FloatingActionButton.large(
-          //             backgroundColor: WirdColors.primaryColor,
-          //             onPressed: () {
-          //               countButtonMethod(wirdData);
-          //             },
-          //             child: Text(endMessage ? 'finished' : '$count',
-          //                 // : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
-          //                 style: TextStyle(
-          //                     color: WirdColors.seconderyColor,
-          //                     fontWeight: FontWeight.bold))),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          body: GestureDetector(
-        onHorizontalDragEnd: (DragEndDetails details) {
-          if (details.primaryVelocity! > 0) {
-            // User swiped Left
-            prevButtonMethod(wirdData);
-          } else if (details.primaryVelocity! < 0) {
-            // User swiped Right
-            nextButtonMethod(wirdData);
-          }
-        },
-        onTap: () {
-          // countButtonMethod(wirdData);
-        },
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Stack(
+      percentage = index / wirdData.getWirdList.length * 1;
+      var CounterPercentage = count / wirdData.getWirdList[index].count * 1;
+      var individualWirdCounter = Positioned(
+          bottom: 30,
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                  child: SizedBox(
+                width: 50,
+                height: 50,
+                child: Stack(
+                  fit: StackFit.expand,
                   children: [
-                    Container(
-                      // color: Colors.blue,
-                      child: Image.asset(
-                        'asset/masjid_arc.png',
-                      ),
+                    CircularProgressIndicator(
+                      value: CounterPercentage,
+                      valueColor:
+                          AlwaysStoppedAnimation(WirdColors.primaryColor),
+                      backgroundColor: WirdColors.seconderyColor,
                     ),
-                    Positioned(
-                        bottom: 30,
-                        child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Center(
-                                child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  CircularProgressIndicator(
-                                    value: CounterPercentage,
-                                    valueColor: AlwaysStoppedAnimation(
-                                        WirdColors.primaryColor),
-                                    backgroundColor: WirdColors.seconderyColor,
-                                  ),
-                                  Container(
-                                      decoration: BoxDecoration(
-                                          // color: Colors.blue,
+                    Container(
+                        decoration: BoxDecoration(
+                            // color: Colors.blue,
 
-                                          shape: BoxShape.circle),
-                                      // color: Colors.blue,
+                            shape: BoxShape.circle),
+                        // color: Colors.blue,
 
-                                      child: Center(
-                                          child: Text(
-                                              '${wirdData.getWirdList[nextIndex].count.toString()}')))
-                                ],
-                              ),
-                            )))),
+                        child: Center(
+                            child: checkWirdCounterIsOne(wirdData)
+                                ? Text(
+                                    '${wirdData.getWirdList[index].count.toString()}')
+                                : Text('')))
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-
-                Expanded(
-                  flex: 3,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 40,
-                            ),
-                            Expanded(
-                                child: arabicTextWidget(context, wirdData)),
-                            SizedBox(
-                              width: 40,
-                            ),
-                          ],
+              ))));
+      return SafeArea(
+        child: Scaffold(
+            body: GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity! > 0) {
+              // User swiped Left
+              prevButtonMethod(wirdData);
+            } else if (details.primaryVelocity! < 0) {
+              // User swiped Right
+              nextButtonMethod(wirdData);
+            }
+          },
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        // color: Colors.blue,
+                        child: Image.asset(
+                          'asset/masjid_arc.png',
                         ),
-                      ],
-                    ),
+                      ),
+                      individualWirdCounter,
+                    ],
                   ),
-                ),
-                Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-          countButtonMethod(wirdData);
-        },
-                      child: Stack(
-                        fit: StackFit.expand,
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Expanded(
+                    flex: 3,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            // color: Colors.green,
-                            decoration: BoxDecoration(
-                                color: WirdColors.seconderyColorDark,
-                                border: Border.all(
-                                    color: WirdColors.primaryColor, width: 5),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(100),
-                                    topRight: Radius.circular(100))),
-                            width: MediaQuery.of(context).size.width,
-                            // color: Colors.orange,
-                            child: Column(
-                              children: [
-                                Expanded(child: SizedBox()),
-                                SizedBox(
-                                  height: 10,
-                                  child: LinearProgressIndicator(
-                                    value: percentage,
-                                    backgroundColor: WirdColors.seconderyColor
-                                        .withOpacity(0.5),
-                                    valueColor: AlwaysStoppedAnimation(
-                                        WirdColors.primaryColor),
-                                  ),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Expanded(
+                                  child: arabicTextWidget(context, wirdData)),
+                              SizedBox(
+                                width: 40,
+                              ),
+                            ],
                           ),
-                          Container(
-                            height: 20,
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Image.asset('asset/finger_print.png'),
-                            ),
-                          )
                         ],
                       ),
-                    ))
-                // Expanded(child: SizedBox())
-              ],
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                // color: Colors.green,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () => prevButtonMethod(wirdData),
-                      child: Container(
-                        child: Icon(
-                          Icons.arrow_left,
-                          size: 40,
-                          color: WirdColors.seconderyColor,
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          countButtonMethod(wirdData);
+                        },
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Container(
+                              // color: Colors.green,
+                              decoration: BoxDecoration(
+                                  color: WirdColors.seconderyColorDark,
+                                  border: Border.all(
+                                      color: WirdColors.primaryColor, width: 5),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(100),
+                                      topRight: Radius.circular(100))),
+                              width: MediaQuery.of(context).size.width,
+                              // color: Colors.orange,
+                              child: Column(
+                                children: [
+                                  Expanded(child: SizedBox()),
+                                  SizedBox(
+                                    height: 10,
+                                    child: LinearProgressIndicator(
+                                      value: endMessage ? 1 : percentage,
+                                      backgroundColor: WirdColors.seconderyColor
+                                          .withOpacity(0.5),
+                                      valueColor: AlwaysStoppedAnimation(
+                                          WirdColors.primaryColor),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 20,
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Image.asset('asset/finger_print.png'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))
+                  // Expanded(child: SizedBox())
+                ],
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  // color: Colors.green,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () => prevButtonMethod(wirdData),
+                        child: Container(
+                          child: Icon(
+                            Icons.arrow_left,
+                            size: 40,
+                            color: WirdColors.seconderyColor,
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(child: SizedBox()),
-                    InkWell(
-                      onTap: () => nextButtonMethod(wirdData),
-                      child: Container(
-                        child: Icon(
-                          Icons.arrow_right,
-                          size: 50,
-                          color: WirdColors.seconderyColor,
+                      Expanded(child: SizedBox()),
+                      InkWell(
+                        onTap: () => nextButtonMethod(wirdData),
+                        child: Container(
+                          child: Icon(
+                            Icons.arrow_right,
+                            size: 50,
+                            color: WirdColors.seconderyColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ));
+            ],
+          ),
+        )),
+      );
     });
+  }
+
+  bool checkWirdCounterIsOne(WirdProvider wirdData) {
+    if (wirdData.getWirdList[index].count == 1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Directionality arabicTextWidget(BuildContext context, WirdProvider wirdData) {
@@ -291,13 +271,19 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: endMessage
-                ? Text('over',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 35,
-                    ))
-                : Text(wirdData.getWirdList[nextIndex].arabic,
+                ? Column(
+                    children: [
+                      Text(quote,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: WirdColors.primaryColor
+                          )),
+                          SizedBox(height: 10,),
+                          Text('<----- Shaykh Hamza Yusuf ---->',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: WirdColors.seconderyColorDark),)
+                    ],
+                  )
+                : Text(wirdData.getWirdList[index].arabic,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.amiri(
                       fontWeight: FontWeight.bold,

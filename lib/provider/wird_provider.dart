@@ -20,16 +20,15 @@ class WirdProvider extends ChangeNotifier {
           i == 6 ||
           i == 9 ||
           i == 10 ||
-          i == 11 ||
+          i == 12 ||
           i == 13 ||
-          i == 14 ||
-          i == 15) {
+          i == 14) {
         returnList.add(WirdData(arabicList[i], 3));
-      } else if (i == 12) {
+      } else if (i == 11) {
         returnList.add(WirdData(arabicList[i], 4));
       } else if (i == 16) {
         returnList.add(WirdData(arabicList[i], 10));
-      } else if (i == 17) {
+      } else if (i == 15) {
         returnList.add(WirdData(arabicList[i], 7));
       } else {
         returnList.add(WirdData(arabicList[i], 1));
@@ -38,6 +37,9 @@ class WirdProvider extends ChangeNotifier {
     // print(returnList);
     return returnList;
   }
+
+  String quote =
+      'People are in need of the Prophetic du’ā’s now, more than ever, because there are shayateen everywhere. If we could see the unseen world, I’m telling you, we would all pass out. Because there are demons all over the place. What you’re doing whilst reciting invocations and litanies is creating a space around you, that if the Jinn and shaytaan see it, they have to back away. If you are consistent with this (Wird al Latif), I guarantee you will see a difference in your life. And if you miss it out you’ll feel horrible during the day – it’ll feel like going outside without brushing your teeth. Put yourself in the protection of Allāh through daily du’ā".\n— Shaykh Hamza Yūsuf';
 
   List arabicWird = [
     'قُلْ هُوَ ٱللَّهُ أَحَدٌ (١)   ٱللَّهُ ٱلصَّمَدُ (٢)   لَمْ يَلِدْ وَلَمْ يُولَدْ (٣)   وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ (٤) ',
@@ -70,7 +72,7 @@ class WirdProvider extends ChangeNotifier {
     'أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ وَعَلَى كَلِمَةِ الْإِخْلَاصِ وَعَلَى د ینِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَآلِهِ وَسَلَّمَ وَعَلَى مِلَّةِ أَبَيْنَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنْ الْمُشْرِكِينَ',
     'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَعَلَيْكَ نَتَوَكَّلُ وَإِلَيْكَ النُّشُورُ',
     'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
-    'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ فَتْحَهُ وَنَصْرَهُ وَنُورَهُ وَبَرَكَتَهُ وَهَدَاهُ',
+    'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ فَتْحَهُ وَنَصْرَهُ وَنُورَهُ وَبَرَكَتَهُ وَهُدَاهُ',
     'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ وَخَيْرَ مَا قَبْلَهُ وَخَيْرُ مَا بَعْدَهُ وَأَعُوذُ بِكَ مِنْ شَرِّ هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ',
     'اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ عَلَى ذَلِكَ',
     'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ وَرِضَاءِ نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ',
