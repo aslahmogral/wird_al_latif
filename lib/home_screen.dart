@@ -87,71 +87,48 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
       percentage = nextIndex / wirdData.getWirdList.length * 1;
+      var CounterPercentage = count / wirdData.getWirdList[nextIndex].count * 1;
       // var percentageBy100 = nextIndex / wirdData.getWirdList.length * 100;
       return Scaffold(
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: SizedBox(
-              height: 120,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // FloatingActionButton.extended(
-                  //     backgroundColor: WirdColors.primaryColor,
-                  //     onPressed: () {
-                  //       print(percentage);
-
-                  //       prevButtonMethod(wirdData);
-                  //     },
-                  //     label: const Text(
-                  //       '  <  ',
-                  //       style: TextStyle(
-                  //         color: WirdColors.primaryColor,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     )),
-                  FloatingActionButton.large(
-                      backgroundColor: WirdColors.primaryColor,
-                      onPressed: () {
-                        countButtonMethod(wirdData);
-                      },
-                      child: Text(
-                          endMessage
-                              ? 'finished'
-                              : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
-                          style: TextStyle(
-                              color: WirdColors.seconderyColor,
-                              fontWeight: FontWeight.bold))),
-                  // FloatingActionButton.extended(
-                  //     backgroundColor: WirdColors.primaryColor,
-                  //     onPressed: () {
-                  //       print(percentage);
-                  //       nextButtonMethod(wirdData);
-                  //     },
-                  //     label: const Text('  Next  ',
-                  //         style: TextStyle(
-                  //             color: WirdColors.seconderyColor,
-                  //             fontWeight: FontWeight.bold))),
-                ],
-              ),
-            ),
-          ),
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(left: 20),
+          //   child: SizedBox(
+          //     height: 120,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         FloatingActionButton.large(
+          //             backgroundColor: WirdColors.primaryColor,
+          //             onPressed: () {
+          //               countButtonMethod(wirdData);
+          //             },
+          //             child: Text(endMessage ? 'finished' : '$count',
+          //                 // : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
+          //                 style: TextStyle(
+          //                     color: WirdColors.seconderyColor,
+          //                     fontWeight: FontWeight.bold))),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           body: GestureDetector(
-            onHorizontalDragEnd: (DragEndDetails details) {
-              if (details.primaryVelocity! > 0) {
-                // User swiped Left
-                prevButtonMethod(wirdData);
-              } else if (details.primaryVelocity! < 0) {
-                // User swiped Right
-                nextButtonMethod(wirdData);
-              }
-            },
-            onTap: () {
-              countButtonMethod(wirdData);
-            },
-            child: Stack(
+        onHorizontalDragEnd: (DragEndDetails details) {
+          if (details.primaryVelocity! > 0) {
+            // User swiped Left
+            prevButtonMethod(wirdData);
+          } else if (details.primaryVelocity! < 0) {
+            // User swiped Right
+            nextButtonMethod(wirdData);
+          }
+        },
+        onTap: () {
+          countButtonMethod(wirdData);
+        },
+        child: Stack(
+          children: [
+            Column(
               children: [
-                Column(
+                Stack(
                   children: [
                     Container(
                       // color: Colors.blue,
@@ -159,36 +136,71 @@ class _HomeScreenState extends State<HomeScreen> {
                         'asset/masjid_arc.png',
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    Positioned(
+                        bottom: 30,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Center(
+                                child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: CounterPercentage,
+                                    valueColor: AlwaysStoppedAnimation(
+                                        WirdColors.primaryColor),
+                                    backgroundColor: WirdColors.seconderyColor,
+                                  ),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          // color: Colors.blue,
 
-                    Expanded(
-                      flex: 3,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                                          shape: BoxShape.circle),
+                                      // color: Colors.blue,
+
+                                      child: Center(
+                                          child: Text(
+                                              '${wirdData.getWirdList[nextIndex].count.toString()}')))
+                                ],
+                              ),
+                            )))),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Expanded(
+                  flex: 3,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Expanded(
-                                    child: arabicTextWidget(context, wirdData)),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                              ],
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Expanded(
+                                child: arabicTextWidget(context, wirdData)),
+                            SizedBox(
+                              width: 40,
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: Container(
+                  ),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Container(
                           // color: Colors.green,
                           decoration: BoxDecoration(
                               color: WirdColors.seconderyColorDark,
@@ -214,44 +226,53 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             ],
                           ),
-                        ))
-                    // Expanded(child: SizedBox())
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    // color: Colors.green,
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () => prevButtonMethod(wirdData),
-                          child: Container(
-                            child: Icon(
-                              Icons.arrow_left,
-                              size: 40,
-                              color: WirdColors.seconderyColor,
-                            ),
-                          ),
                         ),
-                        Expanded(child: SizedBox()),
-                        InkWell(
-                          onTap: () => nextButtonMethod(wirdData),
-                          child: Container(
-                            child: Icon(
-                              Icons.arrow_right,
-                              size: 50,
-                              color: WirdColors.seconderyColor,
-                            ),
+                        Container(
+                          height: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Image.asset('asset/finger_print.png'),
                           ),
-                        ),
+                        )
                       ],
-                    ),
-                  ),
-                ),
+                    ))
+                // Expanded(child: SizedBox())
               ],
             ),
-          ));
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                // color: Colors.green,
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => prevButtonMethod(wirdData),
+                      child: Container(
+                        child: Icon(
+                          Icons.arrow_left,
+                          size: 40,
+                          color: WirdColors.seconderyColor,
+                        ),
+                      ),
+                    ),
+                    Expanded(child: SizedBox()),
+                    InkWell(
+                      onTap: () => nextButtonMethod(wirdData),
+                      child: Container(
+                        child: Icon(
+                          Icons.arrow_right,
+                          size: 50,
+                          color: WirdColors.seconderyColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ));
     });
   }
 
