@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         onTap: () {
-          countButtonMethod(wirdData);
+          // countButtonMethod(wirdData);
         },
         child: Stack(
           children: [
@@ -197,44 +197,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Expanded(
                     flex: 1,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Container(
-                          // color: Colors.green,
-                          decoration: BoxDecoration(
-                              color: WirdColors.seconderyColorDark,
-                              border: Border.all(
-                                  color: WirdColors.primaryColor, width: 5),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(100),
-                                  topRight: Radius.circular(100))),
-                          width: MediaQuery.of(context).size.width,
-                          // color: Colors.orange,
-                          child: Column(
-                            children: [
-                              Expanded(child: SizedBox()),
-                              SizedBox(
-                                height: 10,
-                                child: LinearProgressIndicator(
-                                  value: percentage,
-                                  backgroundColor: WirdColors.seconderyColor
-                                      .withOpacity(0.5),
-                                  valueColor: AlwaysStoppedAnimation(
-                                      WirdColors.primaryColor),
-                                ),
-                              )
-                            ],
+                    child: GestureDetector(
+                      onTap: () {
+          countButtonMethod(wirdData);
+        },
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Container(
+                            // color: Colors.green,
+                            decoration: BoxDecoration(
+                                color: WirdColors.seconderyColorDark,
+                                border: Border.all(
+                                    color: WirdColors.primaryColor, width: 5),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(100),
+                                    topRight: Radius.circular(100))),
+                            width: MediaQuery.of(context).size.width,
+                            // color: Colors.orange,
+                            child: Column(
+                              children: [
+                                Expanded(child: SizedBox()),
+                                SizedBox(
+                                  height: 10,
+                                  child: LinearProgressIndicator(
+                                    value: percentage,
+                                    backgroundColor: WirdColors.seconderyColor
+                                        .withOpacity(0.5),
+                                    valueColor: AlwaysStoppedAnimation(
+                                        WirdColors.primaryColor),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: 20,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Image.asset('asset/finger_print.png'),
-                          ),
-                        )
-                      ],
+                          Container(
+                            height: 20,
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset('asset/finger_print.png'),
+                            ),
+                          )
+                        ],
+                      ),
                     ))
                 // Expanded(child: SizedBox())
               ],
