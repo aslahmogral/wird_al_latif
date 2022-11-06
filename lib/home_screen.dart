@@ -86,32 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
-     percentage = nextIndex / wirdData.getWirdList.length * 1;
+      percentage = nextIndex / wirdData.getWirdList.length * 1;
+      // var percentageBy100 = nextIndex / wirdData.getWirdList.length * 100;
       return Scaffold(
-          // appBar: AppBar(
-          //   title: const Text('Wirdul-Latif '),
-          //   actions: [
-          //     InkWell(
-          //       onDoubleTap: (() {
-          //         setState(() {
-          //           nextIndex = 0;
-          //         });
-          //       }),
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Column(
-          //           children: [
-          //             Text(percentage > 100
-          //                 ? '100.0%'
-          //                 : '${percentage.roundToDouble().toString()}%'),
-          //             Text('Reset')
-          //           ],
-          //         ),
-          //       ),
-          //     )
-          //   ],
-          //   centerTitle: true,
-          // ),
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(left: 20),
             child: SizedBox(
@@ -119,17 +96,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  FloatingActionButton.extended(
-                      backgroundColor: WirdColors.primaryColor,
-                      onPressed: () {
-                        print(percentage);
+                  // FloatingActionButton.extended(
+                  //     backgroundColor: WirdColors.primaryColor,
+                  //     onPressed: () {
+                  //       print(percentage);
 
-                        prevButtonMethod(wirdData);
-                      },
-                      label: const Text(
-                        '  Prev  ',
-                        style: TextStyle(color: Color.fromARGB(255, 254, 213, 100),fontWeight: FontWeight.bold,),
-                      )),
+                  //       prevButtonMethod(wirdData);
+                  //     },
+                  //     label: const Text(
+                  //       '  <  ',
+                  //       style: TextStyle(
+                  //         color: WirdColors.primaryColor,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     )),
                   FloatingActionButton.large(
                       backgroundColor: WirdColors.primaryColor,
                       onPressed: () {
@@ -139,15 +119,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           endMessage
                               ? 'finished'
                               : '$count /${wirdData.getWirdList[nextIndex].count.toString()}',
-                          style: TextStyle(color: WirdColors.seconderyColor,fontWeight: FontWeight.bold))),
-                  FloatingActionButton.extended(
-                      backgroundColor: WirdColors.primaryColor,
-                      onPressed: () {
-                        print(percentage);
-                        nextButtonMethod(wirdData);
-                      },
-                      label: const Text('  Next  ',
-                          style: TextStyle(color: WirdColors.seconderyColor,fontWeight: FontWeight.bold))),
+                          style: TextStyle(
+                              color: WirdColors.seconderyColor,
+                              fontWeight: FontWeight.bold))),
+                  // FloatingActionButton.extended(
+                  //     backgroundColor: WirdColors.primaryColor,
+                  //     onPressed: () {
+                  //       print(percentage);
+                  //       nextButtonMethod(wirdData);
+                  //     },
+                  //     label: const Text('  Next  ',
+                  //         style: TextStyle(
+                  //             color: WirdColors.seconderyColor,
+                  //             fontWeight: FontWeight.bold))),
                 ],
               ),
             ),
@@ -165,51 +149,106 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               countButtonMethod(wirdData);
             },
-            child: Column(
+            child: Stack(
               children: [
-                Container(
-                  // color: Colors.blue,
-                  child: Image.asset(
-                    'asset/masjid_arc.png',
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                Column(
+                  children: [
+                    Container(
+                      // color: Colors.blue,
+                      child: Image.asset(
+                        'asset/masjid_arc.png',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                Expanded(
-                  flex: 3,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Expanded(
+                      flex: 3,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Expanded(
+                                    child: arabicTextWidget(context, wirdData)),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          // color: Colors.green,
+                          decoration: BoxDecoration(
+                              color: WirdColors.seconderyColorDark,
+                              border: Border.all(
+                                  color: WirdColors.primaryColor, width: 5),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(100),
+                                  topRight: Radius.circular(100))),
+                          width: MediaQuery.of(context).size.width,
+                          // color: Colors.orange,
+                          child: Column(
+                            children: [
+                              Expanded(child: SizedBox()),
+                              SizedBox(
+                                height: 10,
+                                child: LinearProgressIndicator(
+                                  value: percentage,
+                                  backgroundColor: WirdColors.seconderyColor
+                                      .withOpacity(0.5),
+                                  valueColor: AlwaysStoppedAnimation(
+                                      WirdColors.primaryColor),
+                                ),
+                              )
+                            ],
+                          ),
+                        ))
+                    // Expanded(child: SizedBox())
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    // color: Colors.green,
+                    child: Row(
                       children: [
-                        arabicTextWidget(context, wirdData),
+                        InkWell(
+                          onTap: () => prevButtonMethod(wirdData),
+                          child: Container(
+                            child: Icon(
+                              Icons.arrow_left,
+                              size: 40,
+                              color: WirdColors.seconderyColor,
+                            ),
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                        InkWell(
+                          onTap: () => nextButtonMethod(wirdData),
+                          child: Container(
+                            child: Icon(
+                              Icons.arrow_right,
+                              size: 50,
+                              color: WirdColors.seconderyColor,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Expanded(
-                    flex: 1,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      // color: Colors.orange,
-                      child: Column(
-                        children: [
-                          Expanded(child: SizedBox()),
-                          SizedBox(
-                            height: 10,
-                            child: LinearProgressIndicator(
-                              value: percentage,
-                              backgroundColor: WirdColors.seconderyColor.withOpacity(0.5),
-                              valueColor: AlwaysStoppedAnimation(
-                                  WirdColors.primaryColor),
-                            ),
-                          )
-                        ],
-                      ),
-                    ))
-                // Expanded(child: SizedBox())
               ],
             ),
           ));
@@ -232,14 +271,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: 35,
                     ))
-                : Text(
-                    wirdData.getWirdList[nextIndex].arabic,
+                : Text(wirdData.getWirdList[nextIndex].arabic,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.amiri(fontWeight: FontWeight.bold,
+                    style: GoogleFonts.amiri(
+                      fontWeight: FontWeight.bold,
                       fontSize: 28,
-                      )
-                    
-                  ),
+                    )),
           ),
         ),
       ),
