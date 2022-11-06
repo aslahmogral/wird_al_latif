@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:wird_al_latif/provider/wird_provider.dart';
 import 'package:wird_al_latif/utils/colors.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
-  bool endMessage = false;
+  bool endOfApp = false;
   var count = 0;
   double percentage = 0;
   late bool checkIfWirdCounterIsOne;
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'People are in need of the Prophetic du’ā’s now, more than ever, because there are shayateen everywhere. If we could see the unseen world, I’m telling you, we would all pass out. Because there are demons all over the place. What you’re doing whilst reciting invocations and litanies is creating a space around you, that if the Jinn and shaytaan see it, they have to back away. If you are consistent with this (Wird al Latif), I guarantee you will see a difference in your life. And if you miss it out you’ll feel horrible during the day – it’ll feel like going outside without brushing your teeth. Put yourself in the protection of Allāh through daily du’ā"';
 
   prevButtonMethod(WirdProvider wirdData) {
-    endMessage = false;
+    endOfApp = false;
     count = 0;
     print(index);
     if (index != 0) {
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   countButtonMethod(WirdProvider wirdData) {
-    if (endMessage) {
+    if (endOfApp) {
       print('end message');
       return null;
     } else {
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         if (index == wirdData.getWirdList.length - 1) {
           setState(() {
-            endMessage = true;
+            endOfApp = true;
           });
         } else {
           setState(() {
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } else {
       setState(() {});
-      endMessage = true;
+      endOfApp = true;
     }
   }
 
@@ -143,11 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       individualWirdCounter,
-                      // Positioned(
-                      //     bottom: 0,
-                      //     child: SizedBox(
-                      //       height: 100,
-                      //         child: Image.asset('asset/bismillah.png')))
                     ],
                   ),
                   SizedBox(
@@ -177,50 +173,69 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          countButtonMethod(wirdData);
-                        },
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: WirdColors.seconderyColorDark,
-                                  border: Border.all(
-                                      color: WirdColors.primaryColor, width: 5),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(100),
-                                      topRight: Radius.circular(100))),
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                children: [
-                                  Expanded(child: SizedBox()),
-                                  SizedBox(
-                                    height: 10,
-                                    child: LinearProgressIndicator(
-                                      value: endMessage ? 1 : percentage,
-                                      backgroundColor: WirdColors.seconderyColor
-                                          .withOpacity(0.5),
-                                      valueColor: AlwaysStoppedAnimation(
-                                          WirdColors.primaryColor),
-                                    ),
-                                  )
-                                ],
-                              ),
+                  endOfApp
+                      ? SizedBox(
+                      
+                        height: 100,
+                        width: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(WirdColors.primaryColor)),
+                                onPressed: () {
+                                  SystemNavigator.pop();
+                                },
+                                child: Text('EXIT',style: TextStyle(color: WirdColors.seconderyColor,fontSize: 20,letterSpacing: 4,fontWeight: FontWeight.bold),)),
+                          ),
+                        )
+                      : Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              countButtonMethod(wirdData);
+                            },
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: WirdColors.seconderyColorDark,
+                                      border: Border.all(
+                                          color: WirdColors.primaryColor,
+                                          width: 5),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(100),
+                                          topRight: Radius.circular(100))),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    children: [
+                                      Expanded(child: SizedBox()),
+                                      SizedBox(
+                                        height: 10,
+                                        child: LinearProgressIndicator(
+                                          value: endOfApp ? 1 : percentage,
+                                          backgroundColor: WirdColors
+                                              .seconderyColor
+                                              .withOpacity(0.5),
+                                          valueColor: AlwaysStoppedAnimation(
+                                              WirdColors.primaryColor),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 20,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20.0, top: 5),
+                                    child:
+                                        Image.asset('asset/finger_print.png'),
+                                  ),
+                                )
+                              ],
                             ),
-                            Container(
-                              height: 20,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom:20.0,top: 5),
-                                child: Image.asset('asset/finger_print.png'),
-                              ),
-                            )
-                          ],
-                        ),
-                      ))
+                          ))
                   // Expanded(child: SizedBox())
                 ],
               ),
@@ -279,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width * 0.8,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: endMessage
+            child: endOfApp
                 ? Column(
                     children: [
                       Text(quote,
