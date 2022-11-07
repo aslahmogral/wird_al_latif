@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Wird Al Latif',
         theme: ThemeData(
           // is not restarted.
           primarySwatch: Colors.blue,
