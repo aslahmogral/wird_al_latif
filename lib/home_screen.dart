@@ -23,14 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
       'People are in need of the Prophetic du’ā’s now, more than ever, because there are shayateen everywhere. If we could see the unseen world, I’m telling you, we would all pass out. Because there are demons all over the place. What you’re doing whilst reciting invocations and litanies is creating a space around you, that if the Jinn and shaytaan see it, they have to back away. If you are consistent with this (Wird al Latif), I guarantee you will see a difference in your life. And if you miss it out you’ll feel horrible during the day – it’ll feel like going outside without brushing your teeth. Put yourself in the protection of Allāh through daily du’ā"';
 
   prevButtonMethod(WirdProvider wirdData) {
-    endOfApp = false;
-    count = 0;
-    print(index);
-    if (index != 0) {
+    if (endOfApp == true) {
+      setState(() {
+        endOfApp = false;
+      });
+      print('endof : made to false');
+    } else if (index != 0) {
+      print('endof :not equal to zero');
+
       setState(() {
         index--;
       });
     }
+    count = 0;
+    print(index);
   }
 
   countButtonMethod(WirdProvider wirdData) {
@@ -39,8 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return null;
     } else {
       if (count < wirdData.getWirdList[index].count - 1) {
-        print('end message 1111');
-
         setState(() {
           count++;
         });
@@ -51,8 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         } else {
           setState(() {
-            print('end message 333');
-
             index++;
 
             count = 0;
@@ -175,17 +177,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   endOfApp
                       ? SizedBox(
-                      
-                        height: 100,
-                        width: 100,
+                          height: 100,
+                          width: 100,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 30.0),
                             child: ElevatedButton(
-                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(WirdColors.primaryColor)),
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        WirdColors.primaryColor)),
                                 onPressed: () {
                                   SystemNavigator.pop();
                                 },
-                                child: Text('EXIT',style: TextStyle(color: WirdColors.seconderyColor,fontSize: 20,letterSpacing: 4,fontWeight: FontWeight.bold),)),
+                                child: Text(
+                                  'EXIT',
+                                  style: TextStyle(
+                                      color: WirdColors.seconderyColor,
+                                      fontSize: 20,
+                                      letterSpacing: 4,
+                                      fontWeight: FontWeight.bold),
+                                )),
                           ),
                         )
                       : Expanded(
