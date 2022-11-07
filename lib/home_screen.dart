@@ -209,7 +209,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: WirdColors.seconderyColorDark,
+                                    gradient: RadialGradient(colors:
+                                    [
+                                      Color(0xffF0D896),
+                                      Color(0xffEBCF81),
+                                      Color(0xffF3C137),
+                                    ] ),
+                                      // color: WirdColors.seconderyColorDark,
                                       border: Border.all(
                                           color: WirdColors.primaryColor,
                                           width: 5),
