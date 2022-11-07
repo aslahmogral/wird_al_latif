@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // color: Colors.green,
                   child: Row(
                     children: [
-                      InkWell(
+                      index == 0? SizedBox(): InkWell(
                         onTap: () => prevButtonMethod(wirdData),
                         child: Container(
                           child: Icon(
@@ -272,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Expanded(child: SizedBox()),
-                      InkWell(
+                      endOfApp? SizedBox(): InkWell(
                         onTap: () => nextButtonMethod(wirdData),
                         child: Container(
                           child: Icon(
