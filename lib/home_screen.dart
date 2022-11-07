@@ -216,9 +216,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Color(0xffF3C137),
                                     ] ),
                                       // color: WirdColors.seconderyColorDark,
-                                      border: Border.all(
-                                          color: WirdColors.primaryColor,
-                                          width: 5),
+                                      // border: Border.all(
+                                      //     color: WirdColors.primaryColor,
+                                      //     width: 5),
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(100),
                                           topRight: Radius.circular(100))),
@@ -243,8 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Container(
                                   height: 20,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 20.0, top: 5),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 30.0, ),
                                     child:
                                         Image.asset('asset/finger_print.png'),
                                   ),
