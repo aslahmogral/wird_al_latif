@@ -82,37 +82,40 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: SizedBox()),
-        Row(
-          children: [
-            index == 0
-                ? SizedBox()
-                : InkWell(
-                    onTap: () => prevButtonMethod(wirdData),
-                    child: Container(
-                      child: Icon(
-                        Icons.arrow_left,
-                        size: 40,
-                        color: WirdColors.seconderyColor,
+        Expanded(flex: 2, child: SizedBox()),
+        Expanded(
+          flex: 2,
+          child: Row(
+            children: [
+              index == 0
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: () => prevButtonMethod(wirdData),
+                      child: Container(
+                        child: Icon(
+                          Icons.arrow_left,
+                          size: 40,
+                          color: WirdColors.seconderyColor,
+                        ),
                       ),
                     ),
-                  ),
-            Expanded(child: SizedBox()),
-            endOfApp
-                ? SizedBox()
-                : InkWell(
-                    onTap: () => nextButtonMethod(wirdData),
-                    child: Container(
-                      child: Icon(
-                        Icons.arrow_right,
-                        size: 50,
-                        color: WirdColors.seconderyColor,
+              Expanded(child: SizedBox()),
+              endOfApp
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: () => nextButtonMethod(wirdData),
+                      child: Container(
+                        child: Icon(
+                          Icons.arrow_right,
+                          size: 50,
+                          color: WirdColors.seconderyColor,
+                        ),
                       ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
-        Expanded(child: SizedBox()),
+        Expanded(flex: 1, child: SizedBox()),
       ],
     );
   }
