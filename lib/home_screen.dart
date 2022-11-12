@@ -78,12 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Align sideNavigateButtons(WirdProvider wirdData) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        // color: Colors.green,
-        child: Row(
+  Column sideNavigateButtons(WirdProvider wirdData) {
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(child: SizedBox()),
+        Row(
           children: [
             index == 0
                 ? SizedBox()
@@ -112,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
           ],
         ),
-      ),
+        Expanded(child: SizedBox()),
+      ],
     );
   }
 
@@ -175,31 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
     BuildContext context,
   ) {
     return endOfApp
-        ? Container(
-            width: MediaQuery.of(context).size.width,
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(WirdColors.primaryColor)),
-                    onPressed: () {
-                      SystemNavigator.pop();
-                    },
-                    child: Text(
-                      'EXIT',
-                      style: TextStyle(
-                          color: WirdColors.seconderyColor,
-                          fontSize: 20,
-                          letterSpacing: 4,
-                          fontWeight: FontWeight.bold),
-                    )),
-              ),
-            ),
-          )
+        ? SizedBox()
         : Container(
             height: 180,
             child: Stack(
@@ -258,7 +235,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 30.0,
                                       ),
-                                      child: Stack(children: [
+                                      child:
+                                          // endOfApp
+                                          //     ? Text('EXIT',
+                                          //         style: TextStyle(
+                                          //             color: Colors.white,
+                                          //             fontSize: 50,
+                                          //             fontWeight: FontWeight.bold))
+                                          //     :
+                                          Stack(children: [
                                         Align(
                                           alignment: Alignment.center,
                                           child: Image.asset(
@@ -306,7 +291,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Goal - ${wirdData.getWirdList[index].count.toString()}',style: TextStyle(fontWeight: FontWeight.bold),),
+                      endOfApp
+                          ? Text('')
+                          : Text(
+                              'Goal - ${wirdData.getWirdList[index].count.toString()}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                     ],
                   ),
                 )
@@ -335,10 +325,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: endOfApp
                 ? Column(
                     children: [
-                      Text(quote,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poorStory(
-                              fontSize: 20, color: WirdColors.primaryColor)),
+                      Text(
+                        quote,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20, color: WirdColors.primaryColor),
+                        // style: GoogleFonts.poorStory(
+                        //     fontSize: 20, color: WirdColors.primaryColor)
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -346,7 +340,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: GoogleFonts.teko(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: WirdColors.seconderyColorDark))
+                              color: WirdColors.seconderyColorDark)),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        WirdColors.primaryColor)),
+                                onPressed: () {
+                                  SystemNavigator.pop();
+                                },
+                                child: Text(
+                                  'EXIT',
+                                  style: TextStyle(
+                                      color: WirdColors.seconderyColor,
+                                      fontSize: 20,
+                                      letterSpacing: 4,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                        ),
+                      )
                     ],
                   )
                 : Text(wirdData.getWirdList[index].arabic,
