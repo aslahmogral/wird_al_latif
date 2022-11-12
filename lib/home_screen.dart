@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Align sideNavigateButtons(WirdProvider wirdData) {
     return Align(
-      alignment: Alignment.center,
+      alignment: Alignment.bottomCenter,
       child: Container(
         // color: Colors.green,
         child: Row(
@@ -116,8 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Stack AppbarArea(
-      BuildContext context, double CounterPercentage, WirdProvider wirdData) {
+  Stack AppbarArea(BuildContext context, WirdProvider wirdData) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -171,100 +170,147 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget BottomCounterButton(WirdProvider wirdData, BuildContext context) {
+  Widget BottomCounterButton(
+    WirdProvider wirdData,
+    BuildContext context,
+  ) {
     return endOfApp
-        ? SizedBox(
-            height: 100,
-            width: 100,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 30.0),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(WirdColors.primaryColor)),
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  child: Text(
-                    'EXIT',
-                    style: TextStyle(
-                        color: WirdColors.seconderyColor,
-                        fontSize: 20,
-                        letterSpacing: 4,
-                        fontWeight: FontWeight.bold),
-                  )),
+        ? Container(
+            width: MediaQuery.of(context).size.width,
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(WirdColors.primaryColor)),
+                    onPressed: () {
+                      SystemNavigator.pop();
+                    },
+                    child: Text(
+                      'EXIT',
+                      style: TextStyle(
+                          color: WirdColors.seconderyColor,
+                          fontSize: 20,
+                          letterSpacing: 4,
+                          fontWeight: FontWeight.bold),
+                    )),
+              ),
             ),
           )
-        : SizedBox(
-            height: 150,
-            child: GestureDetector(
-              onTap: () {
-                countButtonMethod(wirdData);
-              },
-              child: RotatedBox(
-                quarterTurns: 2,
-                child: ClipPath(
-                  clipper: CurveClipper(),
-                  child: RotatedBox(
+        : Container(
+            height: 180,
+            child: Stack(
+              // clipBehavior: Clip.none,
+              children: [
+                RotatedBox(
                     quarterTurns: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          Color.fromARGB(255, 239, 211, 133),
-                          Color.fromARGB(255, 236, 205, 117),
-                          Color(0xffF3C137),
-                          Color(0xffF3C137),
-
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter
-                        ),
-                        
-                        // ),
+                    child: ClipPath(
+                      clipper: CurveClipper(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          //linear-gradient(90deg, rgba(56,94,142,1) 0%, rgba(25,56,94,1) 3%, rgba(31,10,77,1) 7%);
+                          Color.fromARGB(56, 94, 142, 1),
+                          Color.fromARGB(25, 56, 94, 1),
+                          Color.fromARGB(31, 10, 77, 1),
+                        ])),
+                        height: 180,
                       ),
-                      // width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            height: 20,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 30.0,
-                              ),
-                              child: Stack(
-                                children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    'asset/white_fingerprint.png',
-                                    color: Colors.white.withOpacity(0.4),
-                                    colorBlendMode: BlendMode.modulate,
-                                  ),
-                                ),
+                    )),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    height: 150,
+                    child: GestureDetector(
+                      onTap: () {
+                        countButtonMethod(wirdData);
+                      },
+                      child: RotatedBox(
+                        quarterTurns: 2,
+                        child: ClipPath(
+                          clipper: CurveClipper(),
+                          child: RotatedBox(
+                            quarterTurns: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(255, 239, 211, 133),
+                                      Color.fromARGB(255, 236, 205, 117),
+                                      Color(0xffF3C137),
+                                      Color(0xffF3C137),
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter),
 
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text('${wirdData.getWirdList[index].count.toString()}',style: TextStyle(color: Colors.white,fontSize: 50,fontWeight: FontWeight.bold),))
-                              ]),
+                                // ),
+                              ),
+                              // width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                      child: Container(
+                                    height: 20,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 30.0,
+                                      ),
+                                      child: Stack(children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Image.asset(
+                                            'asset/white_fingerprint.png',
+                                            color:
+                                                Colors.white.withOpacity(0.4),
+                                            colorBlendMode: BlendMode.modulate,
+                                          ),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              count.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 50,
+                                                  fontWeight: FontWeight.bold),
+                                            ))
+                                      ]),
+                                    ),
+                                  )),
+                                  SizedBox(
+                                    height: 10,
+                                    child: LinearProgressIndicator(
+                                      value: endOfApp ? 1 : percentage,
+                                      backgroundColor: WirdColors.seconderyColor
+                                          .withOpacity(0.5),
+                                      valueColor: AlwaysStoppedAnimation(
+                                          WirdColors.primaryColor),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )),
-                          SizedBox(
-                            height: 10,
-                            child: LinearProgressIndicator(
-                              value: endOfApp ? 1 : percentage,
-                              backgroundColor:
-                                  WirdColors.seconderyColor.withOpacity(0.5),
-                              valueColor: AlwaysStoppedAnimation(
-                                  WirdColors.primaryColor),
-                            ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                Positioned(
+                  top: 5,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Goal - ${wirdData.getWirdList[index].count.toString()}',style: TextStyle(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                )
+              ],
             ),
           );
   }
@@ -320,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<WirdProvider>(
         builder: (BuildContext context, wirdData, Widget? child) {
       percentage = index / wirdData.getWirdList.length * 1;
-      var CounterPercentage = count / wirdData.getWirdList[index].count * 1;
+      // var CounterPercentage = count;
       // var individualWirdCounter = ;
       return SafeArea(
         child: Scaffold(
@@ -338,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Column(
                   children: [
-                    AppbarArea(context, CounterPercentage, wirdData),
+                    AppbarArea(context, wirdData),
                     SizedBox(
                       height: 20,
                     ),
@@ -362,7 +408,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          bottomNavigationBar: BottomCounterButton(wirdData, context),
+          bottomNavigationBar: BottomCounterButton(
+            wirdData,
+            context,
+          ),
         ),
       );
     });
