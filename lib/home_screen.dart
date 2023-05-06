@@ -139,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 28,
                     )),
               ),
-              Text('(${element.rep} times)')
+              SizedBox(height: 30,),
+              Text('(${element.rep} times)',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)
             ],
           ),
         ),
