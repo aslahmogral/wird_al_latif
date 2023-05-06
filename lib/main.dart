@@ -13,19 +13,41 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) {
-        return WirdProvider();
-      },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Wird Al Latif',
-        theme: ThemeData(
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen(),
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<WirdProvider>(
+            create: (context) => WirdProvider(),
+          ),
+          // ChangeNotifierProvider(
+          //   create: (BuildContext context) {
+          //     return WirdProvider();
+          //   },
+          // )
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Wird Al Latif',
+          theme: ThemeData(
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          home: const HomeScreen(),
+        ));
+
+    // return ChangeNotifierProvider(
+    //   create: (BuildContext context) {
+    //     return WirdProvider();
+    //   },
+    // child:
+    // MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'Wird Al Latif',
+    //   theme: ThemeData(
+    //     // is not restarted.
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   home: const SplashScreen(),
+    // );
+    // // );
   }
 }
