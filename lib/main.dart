@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wird_al_latif/home_screen.dart';
 import 'package:wird_al_latif/provider/wird_provider.dart';
+import 'package:wird_al_latif/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,19 +14,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) {
-        return WirdProvider();
-      },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Wird Al Latif',
-        theme: ThemeData(
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen(),
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<WirdProvider>(
+            create: (context) => WirdProvider(),
+          ),
+          
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Wird Al Latif',
+          theme: ThemeData(
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          home: const SplashScreen(),
+        ));
+
+   
   }
 }
