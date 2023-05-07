@@ -7,7 +7,8 @@ import 'package:wird_al_latif/provider/wird_provider.dart';
 import 'package:wird_al_latif/utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<WirdModel>? wirdList;
+  const HomeScreen({super.key, required this.wirdList});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(initialPage: 0);
-  List<WirdModel>? wirdList = [];
+  // List<WirdModel>? wirdList = [];
   int count = 0;
   int _currentPage = 0;
   int wirdListLength = 44;
@@ -23,9 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      getWirdData();
-    });
+    // setState(() {
+    //   getWirdData();
+    // });
     _currentPage = 0;
     controller.addListener(() {
       setState(() {
@@ -35,12 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getWirdData() async {
-    final _wirdProvider =
-        await Provider.of<WirdProvider>(context, listen: false);
-    await _wirdProvider.loadLocalJsonData();
-    wirdList = await _wirdProvider.wirddata;
-    wirdListLength = _wirdProvider.wirddata!.length;
-    print(_wirdProvider.wirddata);
+    // final _wirdProvider =
+    //     await Provider.of<WirdProvider>(context, listen: false);
+    // await _wirdProvider.loadLocalJsonData();
+    // wirdList = await _wirdProvider.wirddata;
+    wirdListLength = widget.wirdList!.length;
+    print('homescreen*********************************');
+    print(widget.wirdList);
   }
 
   List<Widget> bodyWidget(List<WirdModel>? wirdlist) {
@@ -139,8 +141,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 28,
                     )),
               ),
-              SizedBox(height: 30,),
-              Text('(${element.rep} times)',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                '(${element.rep} times)',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              )
             ],
           ),
         ),
@@ -202,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, wirdData, Widget? child) {
         return PageView(
           controller: controller,
-          children: [...bodyWidget(wirdList)],
+          children: [...bodyWidget(widget.wirdList)],
         );
       }),
       bottomNavigationBar: BottomCounterButton(context),
@@ -238,8 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: GestureDetector(
                 onTap: () async {
                   // countButtonMethod(wirdData);
-                  var rep = await wirdList![controller.page!.toInt()].rep;
-                  print(wirdList![controller.page!.toInt()].rep);
+                  var rep =
+                      await widget.wirdList![controller.page!.toInt()].rep;
+                  print(widget.wirdList![controller.page!.toInt()].rep);
                   setState(() {
                     count++;
                     print(count);
